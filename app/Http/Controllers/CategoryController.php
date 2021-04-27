@@ -38,12 +38,22 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::where('parent_id', 0)
+        $categories = Category::where('parent_id', 0)->where('is_service',0)
             ->with('childrenCategories')
             ->get();
 
         return view('backend.product.categories.create', compact('categories'));
     }
+
+    public function create_service()
+    {
+        $categories = Category::where('parent_id', 0)->where('is_service',1)
+            ->with('childrenCategories')
+            ->get();
+
+        return view('backend.product.categories.create', compact('categories'));
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -64,7 +74,12 @@ class CategoryController extends Controller
         $category->icon = $request->icon;
         $category->meta_title = $request->meta_title;
         $category->meta_description = $request->meta_description;
-
+        if ($request->is_service != null) {
+            $category->is_service = 1;
+        }
+        else {
+            $category->is_service = 0;
+        }
         if ($request->parent_id != "0") {
             $category->parent_id = $request->parent_id;
 
@@ -145,6 +160,14 @@ class CategoryController extends Controller
         $category->meta_description = $request->meta_description;
 
         $previous_level = $category->level;
+
+        if ($request->is_service != null) {
+            $category->is_service = 1;
+        }
+        else {
+            $category->is_service = 0;
+        }
+
 
         if ($request->parent_id != "0") {
             $category->parent_id = $request->parent_id;

@@ -15,11 +15,22 @@ class UserController extends Controller
         return new UserCollection(User::where('id', $id)->get());
     }
 
-    public function updateName(Request $request)
+    public function updatePhone(Request $request)
     {
         $user = User::findOrFail($request->user_id);
         $user->update([
-            'name' => $request->name
+            'phone' => $request->phone
+        ]);
+        return response()->json([
+            'message' => 'phone number of user  has been updated successfully'
+        ]);
+    }
+
+    public function updateNumber(Request $request)
+    {
+        $user = User::findOrFail($request->user_id);
+        $user->update([
+            'name' => $request->phone
         ]);
         return response()->json([
             'message' => 'Profile information has been updated successfully'

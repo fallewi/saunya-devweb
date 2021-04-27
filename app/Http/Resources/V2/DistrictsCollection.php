@@ -13,6 +13,7 @@ class DistrictsCollection extends ResourceCollection
                 return [
                     'id' => $data->id,
                     'name' => $data->name,
+                    'has_district' => $data->has_district,
                     'cost' => $data->cost,
                 ];
             })

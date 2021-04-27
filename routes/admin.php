@@ -240,6 +240,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
     Route::get('/cities/edit/{id}', 'CityController@edit')->name('cities.edit');
     Route::get('/cities/destroy/{id}', 'CityController@destroy')->name('cities.destroy');
 
+// ajout des routes pour districts
+    Route::resource('districts', 'DistrictController');
+    Route::get('/districts/edit/{id}', 'DistrictController@edit')->name('districts.edit');
+    Route::get('/districts/destroy/{id}', 'DistrictController@destroy')->name('districts.destroy');
+
     Route::view('/system/update', 'backend.system.update')->name('system_update');
     Route::view('/system/server-status', 'backend.system.server_status')->name('system_server');
 
@@ -247,4 +252,13 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
     Route::any('/uploaded-files/file-info', 'AizUploadController@file_info')->name('uploaded-files.info');
     Route::resource('/uploaded-files', 'AizUploadController');
     Route::get('/uploaded-files/destroy/{id}', 'AizUploadController@destroy')->name('uploaded-files.destroy');
+
+        // route de gestions des services coté admin
+    Route::get('/services/admin', 'ProductController@admin_products')->name('services.admin');
+    Route::get('/services/seller', 'ProductController@seller_products')->name('services.seller');
+    Route::get('/services/all', 'ProductController@all_services')->name('services.all');
+    Route::get('/services/create', 'ProductController@create_services')->name('services.create');
+    Route::get('/services/admin/{id}/edit', 'ProductController@admin_service_edit')->name('services.admin.edit');
+    Route::get('/services/seller/{id}/edit', 'ProductController@seller_service_edit')->name('products.seller.edit');
+    Route::post('/services/get_products_by_subcategory', 'ProductController@get_services_by_subcategory')->name('services.get_products_by_subcategory');
 });

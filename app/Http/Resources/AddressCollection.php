@@ -13,10 +13,15 @@ class AddressCollection extends ResourceCollection
                 return [
                     'id'      => $data->id,
                     'user_id' => $data->user_id,
+                    'name' => $data->name,
+                    'id_card' => $data->id_card,
                     'address' => $data->address,
                     'country' => $data->country,
                     'city' => $data->city,
-                    'postal_code' => $data->postal_code,
+                    'city_has_district' => $data->city->has_district,
+                    'city_cost' => $data->city->cost,
+                    'district' => $data->district,
+                    'district_cost' => $data->district->cost,
                     'phone' => $data->phone,
                     'set_default' => $data->set_default
                 ];

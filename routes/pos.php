@@ -23,8 +23,6 @@ Route::post('/setDiscount', 'PosController@setDiscount')->name('pos.setDiscount'
 Route::post('/setShipping', 'PosController@setShipping')->name('pos.setShipping');
 Route::post('/pos-order', 'PosController@order_store')->name('pos.order_place');
 
-Route::post('/pos/insert-pos-customer', 'CustomerController@store')->name('pos.insert-pos-customer');
-
 //Admin
 Route::group(['prefix' =>'admin', 'middleware' => ['auth', 'admin']], function(){
 	//pos

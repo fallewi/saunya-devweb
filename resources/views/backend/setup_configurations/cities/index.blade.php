@@ -30,6 +30,7 @@
                                 <th data-breakpoints="lg">#</th>
                                 <th>{{translate('Name')}}</th>
                                 <th>{{translate('Country')}}</th>
+                                <th>{{translate('Has district')}}</th>
                                 <th data-breakpoints="lg">{{translate('Cost')}}</th>
                                 <th data-breakpoints="lg" class="text-right">{{translate('Options')}}</th>
                             </tr>
@@ -40,6 +41,7 @@
                                     <td>{{ ($key+1) + ($cities->currentPage() - 1)*$cities->perPage() }}</td>
                                     <td>{{ $city->name }}</td>
                                     <td>{{ $city->country->name }}</td>
+                                    <td>@if ($city->has_district == 0) Non @else Oui @endif
                                     <td>{{ $city->cost }}</td>
                                     <td class="text-right">
                                         <a class="btn btn-soft-primary btn-icon btn-circle btn-sm" href="{{ route('cities.edit', ['id'=>$city->id, 'lang'=>env('DEFAULT_LANGUAGE')]) }}" title="{{ translate('Edit') }}">
@@ -81,7 +83,15 @@
                                 @endforeach
                             </select>
                         </div>
-
+                        <div class="form-group row">
+                            <label class="col-md-3 col-from-label">{{translate('Has district')}}</label>
+                            <div class="col-md-8">
+                              <label class="aiz-switch aiz-switch-success mb-0">
+                                  <input type="checkbox" name="has_district" >
+                                  <span></span>
+                              </label>
+                            </div>
+                        </div>
                         <div class="form-group mb-3">
     						<label for="name">{{translate('Cost')}}</label>
     						<input type="number" min="0" step="0.01" placeholder="{{translate('Cost')}}" name="cost" class="form-control" required>

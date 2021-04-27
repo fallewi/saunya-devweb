@@ -37,6 +37,15 @@
                           @endforeach
                       </select>
                   </div>
+                  <div class="form-group mb-3">
+                            <label class="col-md-3 col-from-label">{{translate('Has district')}}</label>
+                            <div class="col-md-8">
+                            <label class="aiz-switch aiz-switch-success mb-0">
+                                <input type="checkbox" name="has_district" @if ($city->has_district)? checked :'' @endif>
+                                <span></span>
+                            </label>
+              </div>
+                        </div>
 
                   <div class="form-group mb-3">
                       <label for="name">{{translate('Cost')}}</label>

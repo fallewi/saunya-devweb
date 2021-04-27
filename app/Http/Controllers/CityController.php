@@ -43,7 +43,12 @@ class CityController extends Controller
         $city->name = $request->name;
         $city->cost = $request->cost;
         $city->country_id = $request->country_id;
-
+       if ($request->has_district != null) {
+            $city->has_district = 1;
+        }
+        else {
+            $city->has_district = 0;
+        }
         $city->save();
 
         flash(translate('City has been inserted successfully'))->success();
@@ -79,7 +84,12 @@ class CityController extends Controller
         if($request->lang == env("DEFAULT_LANGUAGE")){
             $city->name = $request->name;
         }
-
+        if ($request->has_district != null) {
+            $city->has_district = 1;
+        }
+        else {
+            $city->has_district = 0;
+        }
         $city->country_id = $request->country_id;
         $city->cost = $request->cost;
 

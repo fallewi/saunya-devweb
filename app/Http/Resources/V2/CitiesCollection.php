@@ -15,6 +15,9 @@ class CitiesCollection extends ResourceCollection
                     'country_id' => $data->country_id,
                     'name' => $data->name,
                     'cost' => $data->cost,
+                    'links' => [
+                        'districts' => route('districts', $data->id),
+                    ]
                 ];
             })
         ];

@@ -56,7 +56,7 @@
                     <li class="aiz-side-nav-item">
                         <a href="#" class="aiz-side-nav-link">
                             <i class="las la-shopping-cart aiz-side-nav-icon"></i>
-                            <span class="aiz-side-nav-text">{{translate('Products')}}</span>
+                            <span class="aiz-side-nav-text">{{translate('Products and Services')}}</span>
                             <span class="aiz-side-nav-arrow"></span>
                         </a>
                         <!--Submenu-->
@@ -69,6 +69,17 @@
                             <li class="aiz-side-nav-item">
                                 <a href="{{route('products.all')}}" class="aiz-side-nav-link">
                                     <span class="aiz-side-nav-text">{{ translate('All Products') }}</span>
+                                </a>
+                            </li>
+                            <li class="aiz-side-nav-item">
+                                <a class="aiz-side-nav-link" href="{{route('services.create')}}">
+                                    <span class="aiz-side-nav-text">{{translate('Add New Service')}}</span>
+                                </a>
+                            </li>
+
+                            <li class="aiz-side-nav-item">
+                                <a href="{{route('services.all')}}" class="aiz-side-nav-link">
+                                    <span class="aiz-side-nav-text">{{ translate('All Services') }}</span>
                                 </a>
                             </li>
                             <li class="aiz-side-nav-item">
@@ -797,6 +808,11 @@
                                 <li class="aiz-side-nav-item">
                                     <a href="{{route('cities.index')}}" class="aiz-side-nav-link {{ areActiveRoutes(['cities.index','cities.edit','cities.update'])}}">
                                         <span class="aiz-side-nav-text">{{translate('Shipping Cities')}}</span>
+                                    </a>
+                                </li>
+                                <li class="aiz-side-nav-item">
+                                    <a href="{{route('districts.index')}}" class="aiz-side-nav-link {{ areActiveRoutes(['districts.index','districts.edit','districts.update'])}}">
+                                        <span class="aiz-side-nav-text">{{translate('Shipping Districts')}}</span>
                                     </a>
                                 </li>
                             </ul>

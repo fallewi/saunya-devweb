@@ -103,6 +103,15 @@
                         </div>
                     </div>
                     <div class="form-group row">
+                            <label class="col-md-3 col-from-label">{{translate('Is a Service Category')}}</label>
+                            <div class="col-md-8">
+                              <label class="aiz-switch aiz-switch-success mb-0">
+                                  <input type="checkbox" name="is_service" @if ( $category->is_service ==1 ) checked @endif >
+                                  <span></span>
+                              </label>
+                            </div>
+                        </div>
+                    <div class="form-group row">
                         <label class="col-md-3 col-form-label">{{translate('Slug')}}</label>
                         <div class="col-md-9">
                             <input type="text" placeholder="{{translate('Slug')}}" id="slug" name="slug" value="{{ $category->slug }}" class="form-control">

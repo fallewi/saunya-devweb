@@ -37,7 +37,38 @@ class ProductController extends Controller
         $query = null;
         $sort_search = null;
 
-        $products = Product::where('added_by', 'admin');
+        $products = Product::where('added_by', 'admin')->where('is_service',0);
+
+        if ($request->type != null){
+            $var = explode(",", $request->type);
+            $col_name = $var[0];
+            $query = $var[1];
+            $products = $products->orderBy($col_name, $query);
+            $sort_type = $request->type;
+        }
+        if ($request->search != null){
+            $products = $products
+                        ->where('name', 'like', '%'.$request->search.'%');
+            $sort_search = $request->search;
+        }
+
+        $products = $products->where('digital', 0)->orderBy('created_at', 'desc')->paginate(15);
+
+        return view('backend.product.products.index', compact('products','type', 'col_name', 'query', 'sort_search'));
+    }
+
+
+
+    public function admin_services(Request $request)
+    {
+        //CoreComponentRepository::instantiateShopRepository();
+
+        $type = 'In House';
+        $col_name = null;
+        $query = null;
+        $sort_search = null;
+
+        $products = Product::where('added_by', 'admin')->where('is_service',1);
 
         if ($request->type != null){
             $var = explode(",", $request->type);
@@ -68,7 +99,7 @@ class ProductController extends Controller
         $query = null;
         $seller_id = null;
         $sort_search = null;
-        $products = Product::where('added_by', 'seller');
+        $products = Product::where('added_by', 'seller')->where('is_service',0);
         if ($request->has('user_id') && $request->user_id != null) {
             $products = $products->where('user_id', $request->user_id);
             $seller_id = $request->user_id;
@@ -92,13 +123,43 @@ class ProductController extends Controller
         return view('backend.product.products.index', compact('products','type', 'col_name', 'query', 'seller_id', 'sort_search'));
     }
 
+        public function seller_services(Request $request)
+    {
+        $col_name = null;
+        $query = null;
+        $seller_id = null;
+        $sort_search = null;
+        $products = Product::where('added_by', 'seller')->where('is_service',1);
+        if ($request->has('user_id') && $request->user_id != null) {
+            $products = $products->where('user_id', $request->user_id);
+            $seller_id = $request->user_id;
+        }
+        if ($request->search != null){
+            $products = $products
+                        ->where('name', 'like', '%'.$request->search.'%');
+            $sort_search = $request->search;
+        }
+        if ($request->type != null){
+            $var = explode(",", $request->type);
+            $col_name = $var[0];
+            $query = $var[1];
+            $products = $products->orderBy($col_name, $query);
+            $sort_type = $request->type;
+        }
+
+        $products = $products->where('digital', 0)->orderBy('created_at', 'desc')->paginate(15);
+        $type = 'Seller';
+
+        return view('backend.product.services.index', compact('products','type', 'col_name', 'query', 'seller_id', 'sort_search'));
+    }
+
     public function all_products(Request $request)
     {
         $col_name = null;
         $query = null;
         $seller_id = null;
         $sort_search = null;
-        $products = Product::orderBy('created_at', 'desc');
+        $products = Product::orderBy('created_at', 'desc')->where('is_service',0);
         if ($request->has('user_id') && $request->user_id != null) {
             $products = $products->where('user_id', $request->user_id);
             $seller_id = $request->user_id;
@@ -122,6 +183,37 @@ class ProductController extends Controller
         return view('backend.product.products.index', compact('products','type', 'col_name', 'query', 'seller_id', 'sort_search'));
     }
 
+        public function all_services(Request $request)
+    {
+        $col_name = null;
+        $query = null;
+        $seller_id = null;
+        $sort_search = null;
+        $products = Product::orderBy('created_at', 'desc')->where('is_service',1);
+        if ($request->has('user_id') && $request->user_id != null) {
+            $products = $products->where('user_id', $request->user_id);
+            $seller_id = $request->user_id;
+        }
+        if ($request->search != null){
+            $products = $products
+                        ->where('name', 'like', '%'.$request->search.'%');
+            $sort_search = $request->search;
+        }
+        if ($request->type != null){
+            $var = explode(",", $request->type);
+            $col_name = $var[0];
+            $query = $var[1];
+            $products = $products->orderBy($col_name, $query);
+            $sort_type = $request->type;
+        }
+
+        $products = $products->paginate(15);
+        $type = 'All';
+
+        return view('backend.product.services.index', compact('products','type', 'col_name', 'query', 'seller_id', 'sort_search'));
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -138,12 +230,25 @@ class ProductController extends Controller
         return view('backend.product.products.create', compact('categories'));
     }
 
+
+        public function create_services()
+        {
+           // $categories = Category::where('parent_id', 0)->where('is_service',true)
+           $categories = Category::where('is_service',true)
+                ->where('digital', 0)
+                ->with('childrenCategories')
+                ->get();
+    
+            return view('backend.product.services.create', compact('categories'));
+        }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
 //        dd($request->all());
@@ -151,6 +256,7 @@ class ProductController extends Controller
 
         $product = new Product;
         $product->name = $request->name;
+        $product->is_service = $request->is_service;
         $product->added_by = $request->added_by;
         if(Auth::user()->user_type == 'seller'){
             $product->user_id = Auth::user()->id;
@@ -428,11 +534,23 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $lang = $request->lang;
         $tags = json_decode($product->tags);
-        $categories = Category::where('parent_id', 0)
+        $categories = Category::where('parent_id', 0)->where('is_service',0)
             ->where('digital', 0)
             ->with('childrenCategories')
             ->get();
         return view('backend.product.products.edit', compact('product', 'categories', 'tags','lang'));
+     }
+
+          public function admin_seller_edit(Request $request, $id)
+     {
+        $product = Product::findOrFail($id);
+        $lang = $request->lang;
+        $tags = json_decode($product->tags);
+        $categories = Category::where('parent_id', 0)->where('is_service',1)
+            ->where('digital', 0)
+            ->with('childrenCategories')
+            ->get();
+        return view('backend.product.services.edit', compact('product', 'categories', 'tags','lang'));
      }
 
     /**
@@ -446,9 +564,21 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $lang = $request->lang;
         $tags = json_decode($product->tags);
-        $categories = Category::all();
+        $categories = Category::where('is_service',0);
         return view('backend.product.products.edit', compact('product', 'categories', 'tags','lang'));
     }
+
+
+
+    public function seller_service_edit(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+        $lang = $request->lang;
+        $tags = json_decode($product->tags);
+        $categories = Category::where('is_service',1);
+        return view('backend.product.services.edit', compact('product', 'categories', 'tags','lang'));
+    }
+
 
     /**
      * Update the specified resource in storage.
@@ -470,7 +600,7 @@ class ProductController extends Controller
         $product->featured = 0;
         $product->todays_deal = 0;
         $product->is_quantity_multiplied = 0;
-
+        $product->is_service           = $request->is_service;
 
         if ($refund_request_addon != null && $refund_request_addon->activated == 1) {
             if ($request->refundable != null) {

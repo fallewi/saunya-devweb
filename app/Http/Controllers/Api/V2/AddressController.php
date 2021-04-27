@@ -8,6 +8,7 @@ use App\District;
 use App\Http\Resources\V2\AddressCollection;
 use App\Address;
 use App\Http\Resources\V2\CitiesCollection;
+use App\Http\Resources\V2\DistrictsCollection;
 use App\Http\Resources\V2\CountriesCollection;
 use Illuminate\Http\Request;
 use App\Models\Cart;

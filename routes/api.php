@@ -84,6 +84,7 @@ Route::prefix('v1')->group(function () {
 
     Route::get('user/info/{id}', 'Api\UserController@info')->middleware('auth:api');
     Route::post('user/info/update', 'Api\UserController@updateName')->middleware('auth:api');
+    Route::post('user/info/updatephone', 'Api\UserController@updatePhone')->middleware('auth:api');
     Route::get('user/shipping/address/{id}', 'Api\AddressController@addresses')->middleware('auth:api');
     Route::post('user/shipping/create', 'Api\AddressController@createShippingAddress')->middleware('auth:api');
     Route::get('user/shipping/delete/{id}', 'Api\AddressController@deleteShippingAddress')->middleware('auth:api');
@@ -213,7 +214,7 @@ Route::prefix('v2')->group(function () {
     Route::post('user/info/update', 'Api\V2\UserController@updateName')->middleware('auth:api');
     Route::get('user/shipping/address/{id}', 'Api\V2\AddressController@addresses')->middleware('auth:api');
     Route::post('user/shipping/create', 'Api\V2\AddressController@createShippingAddress')->middleware('auth:api');
-    Route::post('user/shipping/update', 'Api\V2\AddressController@updateShippingAddress')->middleware('auth:api');
+    Route::post('user/shipping/update/{id}', 'Api\V2\AddressController@updateShippingAddress')->middleware('auth:api');
     Route::post('user/shipping/make_default', 'Api\V2\AddressController@makeShippingAddressDefault')->middleware('auth:api');
     Route::get('user/shipping/delete/{id}', 'Api\V2\AddressController@deleteShippingAddress')->middleware('auth:api');
 

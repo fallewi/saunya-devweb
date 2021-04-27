@@ -18,7 +18,7 @@ class OrderController extends Controller
 {
     public function store(Request $request, $set_paid = false)
     {
-        $cartItems = Cart::where('user_id', $request->user_id)->where('owner_id', $request->owner_id)->get();
+/*        $cartItems = Cart::where('user_id', $request->user_id)->where('owner_id', $request->owner_id)->get();
 
         if ($cartItems->isEmpty()) {
             return response()->json([
@@ -27,6 +27,7 @@ class OrderController extends Controller
                 'message' => 'Cart is Empty'
             ]);
         }
+*/
 
         $user = User::find($request->user_id);
 

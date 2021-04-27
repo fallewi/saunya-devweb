@@ -90,6 +90,15 @@
                             <textarea name="meta_description" rows="5" class="form-control"></textarea>
                         </div>
                     </div>
+                    <div class="form-group row">
+                            <label class="col-md-3 col-from-label">{{translate('Is a Service Category')}}</label>
+                            <div class="col-md-8">
+                              <label class="aiz-switch aiz-switch-success mb-0">
+                                  <input type="checkbox" name="is_service"  >
+                                  <span></span>
+                              </label>
+                            </div>
+                        </div>
                     @if (\App\BusinessSetting::where('type', 'category_wise_commission')->first()->value == 1)
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label">{{translate('Commission Rate')}}</label>
