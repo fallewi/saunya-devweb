@@ -60,7 +60,7 @@
                         <div class="form-group row">
                             <label class="col-md-3 col-from-label">{{translate('Tags')}} <span class="text-danger">*</span></label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control aiz-tag-input" name="tags[]" placeholder="{{ translate('Type and hit enter to add a tag') }}" required>
+                                <input type="text" required class="form-control aiz-tag-input" name="tags[]" placeholder="{{ translate('Type and hit enter to add a tag') }}" required>
                                 <small class="text-muted">{{translate('This is used for search. Input those words by which cutomer can find this product.')}}</small>
                             </div>
                         </div>
@@ -173,6 +173,7 @@
                             <div class="col-md-1">
                                 <label class="aiz-switch aiz-switch-success mb-0">
                                     <input value="1" type="checkbox" name="colors_active">
+                                    <input name="is_service" value="0"  type="hidden">
                                     <span></span>
                                 </label>
                             </div>

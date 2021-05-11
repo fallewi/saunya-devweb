@@ -120,7 +120,7 @@ Route::prefix('v2/auth')->group(function () {
 
 Route::prefix('v2')->group(function () {
     Route::apiResource('banners', 'Api\V2\BannerController')->only('index');
-	Route::get('districts/{id}', 'Api\V2\AddressController@getDistricts')->name('districts');
+
     Route::get('brands/top', 'Api\V2\BrandController@top');
     Route::apiResource('brands', 'Api\V2\BrandController')->only('index');
 
@@ -212,16 +212,18 @@ Route::prefix('v2')->group(function () {
 
     Route::get('user/info/{id}', 'Api\V2\UserController@info')->middleware('auth:api');
     Route::post('user/info/update', 'Api\V2\UserController@updateName')->middleware('auth:api');
+    Route::post('user/info/updateinfo', 'Api\V2\UserController@updateUserInfo')->middleware('auth:api');
     Route::get('user/shipping/address/{id}', 'Api\V2\AddressController@addresses')->middleware('auth:api');
     Route::post('user/shipping/create', 'Api\V2\AddressController@createShippingAddress')->middleware('auth:api');
-    Route::post('user/shipping/update/{id}', 'Api\V2\AddressController@updateShippingAddress')->middleware('auth:api');
     Route::post('user/shipping/make_default', 'Api\V2\AddressController@makeShippingAddressDefault')->middleware('auth:api');
     Route::get('user/shipping/delete/{id}', 'Api\V2\AddressController@deleteShippingAddress')->middleware('auth:api');
+    Route::post('user/shipping/update/{id}', 'Api\V2\AddressController@updateShippingAddress')->middleware('auth:api');
 
     Route::post('get-user-by-access_token', 'Api\V2\UserController@getUserInfoByAccessToken');
 
     Route::get('cities', 'Api\V2\AddressController@getCities');
     Route::get('countries', 'Api\V2\AddressController@getCountries');
+    Route::get('districts/{id}', 'Api\V2\AddressController@getDistricts')->name('districts');
 
     Route::post('shipping_cost', 'Api\V2\ShippingController@shipping_cost')->middleware('auth:api');
 

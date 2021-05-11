@@ -137,4 +137,19 @@ class CityController extends Controller
         
         echo json_encode($html);
     }
+
+    public function get_district(Request $request) {
+        $city_info = City::where('name', $request->city_name)->first();
+        
+        $districts = Districts::where('city_id', $city_info->id)->get();
+        $html = '';
+        
+        foreach ($districts as $row) {
+//            $val = $row->id . ' | ' . $row->name;
+            $html .= '<option value="' . $row->name . '">' . $row->getTranslation('name') . '</option>';
+        }
+        
+        
+        echo json_encode($html);
+    }
 }

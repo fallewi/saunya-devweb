@@ -29,17 +29,7 @@
                     </div>
                 </div>
             </div>
-            @if (\App\Addon::where('unique_identifier', 'pos_system')->first() != null && \App\Addon::where('unique_identifier', 'pos_system')->first()->activated)
-                <div class="d-none d-md-flex justify-content-around align-items-center align-items-stretch ml-3">
-                    <div class="aiz-topbar-item">
-                        <div class="d-flex align-items-center">
-                            <a class="btn btn-icon btn-circle btn-light" href="{{ route('poin-of-sales.index') }}" target="_blank" title="{{ translate('POS') }}">
-                                <i class="las la-print"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            @endif
+   
         </div>
         <div class="d-flex justify-content-around align-items-center align-items-stretch">
             @php
@@ -149,7 +139,7 @@
                         </a>
                     </div>
                 </div>
-            </div><!-- .aiz-topbar-item -->
+            </div>
         </div>
     </div>
-</div><!-- .aiz-topbar -->
+</div>

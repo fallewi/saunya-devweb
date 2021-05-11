@@ -16,18 +16,17 @@ class AddressCollection extends ResourceCollection
                     'name' => $data->name,
                     'id_card' => $data->id_card,
                     'address' => $data->address,
+                    'shipping_cost' => $data->shipping_cost,
                     'country' => $data->country,
                     'city' => $data->city,
-                    'city_has_district' => $data->city->has_district,
-                    'city_cost' => $data->city->cost,
                     'district' => $data->district,
-                    'district_cost' => $data->district->cost,
                     'phone' => $data->phone,
                     'set_default' => $data->set_default
                 ];
             })
         ];
     }
+
 
     public function with($request)
     {

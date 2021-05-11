@@ -17,8 +17,11 @@ class AddressController extends Controller
 {
     public function addresses($id)
     {
+        $address = Address::where('user_id', $id) ;
         return new AddressCollection(Address::where('user_id', $id)->get());
     }
+
+
 
     public function createShippingAddress(Request $request)
     {
@@ -26,9 +29,15 @@ class AddressController extends Controller
         $address->user_id = $request->user_id;
         $address->address = $request->address;
         $address->country = $request->country;
+        $address->shipping_cost = $request->shipping_cost;
+        $address->name = $request->name;
+        $address->id_card = $request->id_card;
         $address->city = $request->city;
+        $address->district = $request->district;
         $address->postal_code = $request->postal_code;
         $address->phone = $request->phone;
+        $address->save();
+
         $address->save();
 
         return response()->json([
@@ -40,11 +49,18 @@ class AddressController extends Controller
     public function updateShippingAddress(Request $request)
     {
         $address = Address::find($request->id);
+        $address->user_id = $request->user_id;
         $address->address = $request->address;
         $address->country = $request->country;
+        $address->shipping_cost = $request->shipping_cost;
+        $address->name = $request->name;
+        $address->id_card = $request->id_card;
+        $address->city = $request->city;
         $address->city = $request->city;
         $address->postal_code = $request->postal_code;
         $address->phone = $request->phone;
+        $address->save();
+
         $address->save();
 
         return response()->json([
@@ -52,7 +68,6 @@ class AddressController extends Controller
             'message' => 'Shipping information has been updated successfully'
         ]);
     }
-
 
     public function deleteShippingAddress($id)
     {
@@ -104,6 +119,8 @@ class AddressController extends Controller
     public function getCountries()
     {
         return new CountriesCollection(Country::where('status', 1)->get());
+    }
+
     }
 	
 	public function getDistricts($id)

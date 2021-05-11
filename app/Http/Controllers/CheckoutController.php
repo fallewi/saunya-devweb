@@ -7,13 +7,8 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Category;
 use App\Http\Controllers\PaypalController;
-use App\Http\Controllers\InstamojoController;
-use App\Http\Controllers\ClubPointController;
-use App\Http\Controllers\StripePaymentController;
-use App\Http\Controllers\PublicSslCommerzPaymentController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\AffiliateController;
-use App\Http\Controllers\PaytmController;
 use App\Order;
 use App\CommissionHistory;
 use App\BusinessSetting;
@@ -48,22 +43,7 @@ class CheckoutController extends Controller
                     return $paypal->getCheckout();
                 } elseif ($request->payment_option == 'stripe') {
                     $stripe = new StripePaymentController;
-                    return $stripe->stripe();
-                } elseif ($request->payment_option == 'sslcommerz') {
-                    $sslcommerz = new PublicSslCommerzPaymentController;
-                    return $sslcommerz->index($request);
-                } elseif ($request->payment_option == 'instamojo') {
-                    $instamojo = new InstamojoController;
-                    return $instamojo->pay($request);
-                } elseif ($request->payment_option == 'razorpay') {
-                    $razorpay = new RazorpayController;
-                    return $razorpay->payWithRazorpay($request);
-                } elseif ($request->payment_option == 'paystack') {
-                    $paystack = new PaystackController;
-                    return $paystack->redirectToGateway($request);
-                } elseif ($request->payment_option == 'voguepay') {
-                    $voguePay = new VoguePayController;
-                    return $voguePay->customer_showForm();
+                    return $stripe->stripe(); 
                 } elseif ($request->payment_option == 'payhere') {
                     $order = Order::findOrFail($request->session()->get('order_id'));
 

@@ -10,7 +10,7 @@
                     <div class="col done">
                         <div class="text-center text-success">
                             <i class="la-3x mb-2 las la-shopping-cart"></i>
-                            <h3 class="fs-14 fw-600 d-none d-lg-block text-capitalize">{{ translate('1. My Cart')}}</h3>
+                            <h3 class="fs-14 fw-600 d-none d-lg-block text-capitalize">{{ translate('1. My Cart')}}</ h3>
                         </div>
                     </div>
                     <div class="col active">
@@ -70,12 +70,24 @@
                                                         <span class="fw-600 ml-2">{{ $address->postal_code }}</span>
                                                     </div>
                                                     <div>
+                                                        <span class="opacity-60">{{ translate('Name') }}:</span>
+                                                        <span class="fw-600 ml-2">{{ $address->name }}</span>
+                                                    </div>
+                                                    <div>
+                                                        <span class="opacity-60">{{ translate('Id Card') }}:</span>
+                                                        <span class="fw-600 ml-2">{{ $address->id_card }}</span>
+                                                    </div>
+                                                    <div>
                                                         <span class="opacity-60">{{ translate('City') }}:</span>
                                                         <span class="fw-600 ml-2">{{ $address->city }}</span>
                                                     </div>
                                                     <div>
                                                         <span class="opacity-60">{{ translate('Country') }}:</span>
                                                         <span class="fw-600 ml-2">{{ $address->country }}</span>
+                                                    </div>
+                                                    <div>
+                                                        <span class="opacity-60">{{ translate('District') }}:</span>
+                                                        <span class="fw-600 ml-2">{{ $address->district }}</span>
                                                     </div>
                                                     <div>
                                                         <span class="opacity-60">{{ translate('Phone') }}:</span>
@@ -123,7 +135,7 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group">
                                             <label class="control-label">{{ translate('Select your country')}}</label>
                                             <select class="form-control aiz-selectpicker" data-live-search="true" name="country">
@@ -133,7 +145,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group has-feedback">
                                             
                                             <label class="control-label">{{ translate('City')}}</label>
@@ -145,19 +157,37 @@
                                             
                                         </div>
                                     </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group has-feedback">
+                                            
+                                            <label class="control-label">{{ translate('District')}}</label>
+                                            <select class="form-control aiz-selectpicker" data-live-search="true" name="district" required>
+                                                @foreach (\App\District::get() as $key => $district)
+                                                    <option value="{{ $district->name }}">{{ $district->getTranslation('name') }}</option>
+                                                @endforeach
+                                            </select>
+                                            
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group has-feedback">
                                             <label class="control-label">{{ translate('Postal code')}}</label>
                                             <input type="text" class="form-control" placeholder="{{ translate('Postal code')}}" name="postal_code" required>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="form-group has-feedback">
                                             <label class="control-label">{{ translate('Phone')}}</label>
                                             <input type="number" lang="en" min="0" class="form-control" placeholder="{{ translate('Phone')}}" name="phone" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group has-feedback">
+                                            <label class="control-label">{{ translate('Id Card')}}</label>
+                                            <input type="number" lang="en" min="0" class="form-control" placeholder="{{ translate('Id Card')}}" name="id_card" required>
                                         </div>
                                     </div>
                                 </div>
@@ -314,6 +344,26 @@
                 var obj = JSON.parse(response);
                 if(obj != '') {
                     $('[name="city"]').html(obj);
+                    AIZ.plugins.bootstrapSelect('refresh');
+                }
+            }
+        });
+    }
+
+    function get_district(city) {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: "{{route('get-district')}}",
+            type: 'POST',
+            data: {
+                city_name: city
+            },
+            success: function (response) {
+                var obj = JSON.parse(response);
+                if(obj != '') {
+                    $('[name="district"]').html(obj);
                     AIZ.plugins.bootstrapSelect('refresh');
                 }
             }

@@ -56,9 +56,9 @@ class PaypalController extends Controller
         ];
 
         try {
-            // Call API with your client and get a response for your call
+            // Appelez l'API avec votre client et obtenez une réponse à votre appel
             $response = $client->execute($order_create_request);
-            // If call returns body in response, you can get the deserialized version from the result attribute of the response
+            // Si l'appel renvoie le corps en réponse, vous pouvez obtenir la version désérialisée à partir de l'attribut result de la réponse
             //return Redirect::to($response->result->links[1]->href);
             return response()->json(['result' => true, 'url' => $response->result->links[1]->href, 'message' => "Found redirect url"]);
         } catch (HttpException $ex) {
@@ -75,7 +75,7 @@ class PaypalController extends Controller
     public function getDone(Request $request)
     {
         //dd($request->all());
-        // Creating an environment
+        // Créer un environnement
         $clientId = env('PAYPAL_CLIENT_ID');
         $clientSecret = env('PAYPAL_CLIENT_SECRET');
 
@@ -86,7 +86,7 @@ class PaypalController extends Controller
         }
         $client = new PayPalHttpClient($environment);
 
-        // $response->result->id gives the orderId of the order created above
+        // $response->result->id donne le orderId de la commande créée ci-dessus
 
         $ordersCaptureRequest = new OrdersCaptureRequest($request->token);
         $ordersCaptureRequest->prefer('return=representation');

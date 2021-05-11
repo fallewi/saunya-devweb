@@ -21,11 +21,14 @@ class PurchaseHistoryCollection extends ResourceCollection
                     'shipping_type_string' => $data->shipping_type != null ? ucwords(str_replace('_', ' ', $data->shipping_type)) : "",
                     'payment_status' => $data->payment_status,
                     'payment_status_string' => ucwords(str_replace('_', ' ', $data->payment_status)),
-                    'delivery_status' => $data->orderDetails->first()->delivery_status,
+                    // j'ai rajouté 'delivery_status' smple pour le moment et commenter le blon pour l'app mobile . a voir dans quelle mesure decommenter plutard
+
+    //                'delivery_status' => $data->orderDetails->first()->delivery_status,
+                    'delivery_status' => $data->delivery_status,
                     'delivery_status_string' => $data->orderDetails->first()->delivery_status == 'pending' ? "Order Placed" : ucwords(str_replace('_', ' ', $data->orderDetails->first()->delivery_status)),
                     'grand_total' => format_price($data->grand_total),
                     'coupon_discount' => format_price($data->coupon_discount),
-                    'shipping_cost' => format_price($data->orderDetails->sum('shipping_cost')),
+   //               'shipping_cost' => format_price($data->orderDetails->sum('shipping_cost')),
                     'subtotal' => format_price($data->orderDetails->sum('price')),
                     'tax' => format_price($data->orderDetails->sum('tax')),
                     'date' => Carbon::createFromTimestamp($data->date)->format('d-m-Y'),

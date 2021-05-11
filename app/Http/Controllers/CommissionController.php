@@ -15,7 +15,7 @@ use Session;
 
 class CommissionController extends Controller
 {
-    //redirect to payment controllers according to selected payment gateway for seller payment
+    //redirection vers les contrôleurs de paiement en fonction de la passerelle de paiement sélectionnée pour le paiement du vendeur
     public function pay_to_seller(Request $request)
     {
         $data['seller_id'] = $request->seller_id;
@@ -60,7 +60,7 @@ class CommissionController extends Controller
         }
     }
 
-    //redirects to this method after successfull seller payment
+    //redirige vers cette méthode après le paiement réussi du vendeur
     public function seller_payment_done($payment_data, $payment_details){
         $seller = Seller::findOrFail($payment_data['seller_id']);
         $seller->admin_to_pay = $seller->admin_to_pay - $payment_data['amount'];

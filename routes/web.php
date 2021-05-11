@@ -263,6 +263,7 @@ Route::get('/vogue-pay/failure/{id}', 'VoguePayController@paymentFailure');
 Route::any('/iyzico/payment/callback/{payment_type}/{amount?}/{payment_method?}/{order_id?}/{customer_package_id?}/{seller_package_id?}', 'IyzicoController@callback')->name('iyzico.callback');
 
 Route::post('/get-city', 'CityController@get_city')->name('get-city');
+Route::post('/get-district', 'CityController@get_district')->name('get-district');
 
 Route::resource('addresses', 'AddressController');
 Route::post('/addresses/update/{id}', 'AddressController@update')->name('addresses.update');

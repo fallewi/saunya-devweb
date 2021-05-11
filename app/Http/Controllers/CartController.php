@@ -14,7 +14,7 @@ class CartController extends Controller
 {
     public function index(Request $request)
     {
-        //dd($cart->all());
+        //dd($cart->all()); affiche toutes les infos du panier pour le test
         $categories = Category::all();
         return view('frontend.view_cart', compact('categories'));
     }
@@ -47,7 +47,7 @@ class CartController extends Controller
         }
 
 
-        //check the color enabled or disabled for the product
+        // vérifier la couleur activée ou désactivée pour le produit
         if($request->has('color')){
             $str = $request['color'];
         }
@@ -79,8 +79,8 @@ class CartController extends Controller
             $price = $product->unit_price;
         }
 
-        //discount calculation based on flash deal and regular discount
-        //calculation of taxes
+  // calcul de la remise en fonction de l'offre flash et de la remise régulière
+        // calcul des taxes
         $flash_deals = \App\FlashDeal::where('status', 1)->get();
         $inFlashDeal = false;
         foreach ($flash_deals as $flash_deal) {
@@ -172,7 +172,8 @@ class CartController extends Controller
         return array('status' => 1, 'view' => view('frontend.partials.addedToCart', compact('product', 'data'))->render());
     }
 
-    //removes from Cart
+    
+// supprime du panier
     public function removeFromCart(Request $request)
     {
         if($request->session()->has('cart')){
@@ -184,7 +185,7 @@ class CartController extends Controller
         return view('frontend.partials.cart_details');
     }
 
-    //updated the quantity for a cart item
+  //  mis à jour de la quantité d'un article du panier
     public function updateQuantity(Request $request)
     {
         $cart = $request->session()->get('cart', collect([]));

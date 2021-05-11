@@ -11,7 +11,7 @@ use Config;
 
 class InvoiceController extends Controller
 {
-    //download invoice
+    //téléchargement de la facture
     public function invoice_download($id)
     {
         if(Session::has('currency_code')){
@@ -32,25 +32,9 @@ class InvoiceController extends Controller
             $not_text_align = 'right';            
         }
 
-        if($currency_code == 'BDT' || $language_code == 'bd'){
-            // bengali font
-            $font_family = "'Hind Siliguri','sans-serif'";
-        }elseif($currency_code == 'KHR' || $language_code == 'kh'){
-            // khmer font
-            $font_family = "'Hanuman','sans-serif'";
-        }elseif($currency_code == 'AMD'){
-            // Armenia font
-            $font_family = "'arnamu','sans-serif'";
-        }elseif($currency_code == 'ILS'){
-            // Israeli font
-            $font_family = "'Varela Round','sans-serif'";
-        }elseif($currency_code == 'AED' || $currency_code == 'EGP' || $language_code == 'sa'){
-            // middle east/arabic font
-            $font_family = "'XBRiyaz','sans-serif'";
-        }else{
-            // general for all
+          
             $font_family = "'Roboto','sans-serif'";
-        }
+        
 
         $order = Order::findOrFail($id);
         return PDF::loadView('backend.invoices.invoice',[

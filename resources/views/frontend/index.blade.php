@@ -1,9 +1,9 @@
 @extends('frontend.layouts.app')
 
 @section('content')
-    {{-- Categories , Sliders . Today's deal --}}
+    {{-- Catégories , Sliders . ventes d'aujourd'hui --}}
     <div class="home-banner-area mb-4 pt-3">
-        <div class="container">
+       
             <div class="row gutters-10 position-relative">
                 <div class="col-lg-3 position-static d-none d-lg-block">
                     @include('frontend.partials.category_menu')
@@ -37,72 +37,10 @@
                             @endforeach
                         </div>
                     @endif
-                    @if (count($featured_categories) > 0)
-                        <ul class="list-unstyled mb-0 row gutters-5">
-                            @foreach ($featured_categories as $key => $category)
-                                <li class="minw-0 col-4 col-md mt-3">
-                                    <a href="{{ route('products.category', $category->slug) }}" class="d-block rounded bg-white p-2 text-reset shadow-sm">
-                                        <img
-                                            src="{{ static_asset('assets/img/placeholder.jpg') }}"
-                                            data-src="{{ uploaded_asset($category->banner) }}"
-                                            alt="{{ $category->getTranslation('name') }}"
-                                            class="lazyload img-fit"
-                                            height="78"
-                                            onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder-rect.jpg') }}';"
-                                        >
-                                        <div class="text-truncate fs-12 fw-600 mt-2 opacity-70">{{ $category->getTranslation('name') }}</div>
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @endif
+ 
                 </div>
 
-                @if($num_todays_deal > 0)
-                <div class="col-lg-2 order-3 mt-3 mt-lg-0">
-                    <div class="bg-white rounded shadow-sm">
-                        <div class="bg-soft-primary rounded-top p-3 d-flex align-items-center justify-content-center">
-                            <span class="fw-600 fs-16 mr-2 text-truncate">
-                                {{ translate('Todays Deal') }}
-                            </span>
-                            <span class="badge badge-primary badge-inline">{{ translate('Hot') }}</span>
-                        </div>
-                        <div class="c-scrollbar-light overflow-auto h-lg-400px p-2 bg-primary rounded-bottom">
-                            <div class="gutters-5 lg-no-gutters row row-cols-2 row-cols-lg-1">
-                            @foreach (filter_products(\App\Product::where('published', 1)->where('todays_deal', '1'))->get() as $key => $product)
-                                @if ($product != null)
-                                <div class="col mb-2">
-                                    <a href="{{ route('product', $product->slug) }}" class="d-block p-2 text-reset bg-white h-100 rounded">
-                                        <div class="row gutters-5 align-items-center">
-                                            <div class="col-lg">
-                                                <div class="img">
-                                                    <img
-                                                        class="lazyload img-fit h-140px h-lg-80px"
-                                                        src="{{ static_asset('assets/img/placeholder.jpg') }}"
-                                                        data-src="{{ uploaded_asset($product->thumbnail_img) }}"
-                                                        alt="{{ $product->getTranslation('name') }}"
-                                                        onerror="this.onerror=null;this.src='{{ static_asset('assets/img/placeholder.jpg') }}';"
-                                                    >
-                                                </div>
-                                            </div>
-                                            <div class="col-lg">
-                                                <div class="fs-16">
-                                                    <span class="d-block text-primary fw-600">{{ home_discounted_base_price($product->id) }}</span>
-                                                    @if(home_base_price($product->id) != home_discounted_base_price($product->id))
-                                                        <del class="d-block opacity-70">{{ home_base_price($product->id) }}</del>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                @endif
-                            @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @endif
+                
 
             </div>
         </div>
@@ -125,7 +63,7 @@
                     </div>
                 @endforeach
             </div>
-        </div>
+        
     </div>
     @endif
 
@@ -136,7 +74,7 @@
     @endphp
     @if($flash_deal != null && strtotime(date('Y-m-d H:i:s')) >= $flash_deal->start_date && strtotime(date('Y-m-d H:i:s')) <= $flash_deal->end_date)
     <section class="mb-4">
-        <div class="container">
+      
             <div class="px-2 py-4 px-md-4 py-md-3 bg-white shadow-sm rounded">
 
                 <div class="d-flex flex-wrap mb-3 align-items-baseline border-bottom">
@@ -202,7 +140,7 @@
                         @endif
                     @endforeach
                 </div>
-            </div>
+            
         </div>
     </section>
     @endif
@@ -222,7 +160,7 @@
     {{-- Banner Section 2 --}}
     @if (get_setting('home_banner2_images') != null)
     <div class="mb-4">
-        <div class="container">
+       
             <div class="row gutters-10">
                 @php $banner_2_imags = json_decode(get_setting('home_banner2_images')); @endphp
                 @foreach ($banner_2_imags as $key => $value)
@@ -235,7 +173,7 @@
                     </div>
                 @endforeach
             </div>
-        </div>
+       
     </div>
     @endif
 
@@ -251,7 +189,7 @@
         @endphp
            @if (count($classified_products) > 0)
                <section class="mb-4">
-                   <div class="container">
+                  
                        <div class="px-2 py-4 px-md-4 py-md-3 bg-white shadow-sm rounded">
                             <div class="d-flex mb-3 align-items-baseline border-bottom">
                                 <h3 class="h5 fw-700 mb-0">
@@ -294,7 +232,7 @@
                                @endforeach
                            </div>
                        </div>
-                   </div>
+                   
                </section>
            @endif
        @endif
@@ -302,7 +240,7 @@
     {{-- Banner Section 2 --}}
     @if (get_setting('home_banner3_images') != null)
     <div class="mb-4">
-        <div class="container">
+        
             <div class="row gutters-10">
                 @php $banner_3_imags = json_decode(get_setting('home_banner3_images')); @endphp
                 @foreach ($banner_3_imags as $key => $value)
@@ -315,7 +253,7 @@
                     </div>
                 @endforeach
             </div>
-        </div>
+       
     </div>
     @endif
 
@@ -328,7 +266,7 @@
 
     {{-- Top 10 categories and Brands --}}
     <section class="mb-4">
-        <div class="container">
+    
             <div class="row gutters-10">
                 @if (get_setting('top10_categories') != null)
                     <div class="col-lg-6">
@@ -366,7 +304,7 @@
                                     </div>
                                 @endif
                             @endforeach
-                        </div>
+                        
                     </div>
                 @endif
                 @if (get_setting('top10_categories') != null)

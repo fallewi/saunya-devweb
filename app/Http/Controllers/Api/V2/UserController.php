@@ -26,16 +26,27 @@ class UserController extends Controller
         ]);
     }
 
-    public function updateNumber(Request $request)
+
+// mise à jour des infos du users sur l'app mobile
+    public function updateUserInfo(Request $request)
     {
         $user = User::findOrFail($request->user_id);
         $user->update([
-            'name' => $request->phone
+            'name' => $request->name ,
+            'id_card' => $request->id_card ,
+            'avatar' => $request->avatar ,
+            'email' => $request->email ,
+            'address' => $request->address ,
+            'city' => $request->city ,
+            'country' => $request->country ,
+            'phone' => $request->phone
         ]);
+
         return response()->json([
-            'message' => 'Profile information has been updated successfully'
+            'message' => 'User informations has been updated successfully'
         ]);
     }
+
 
     public function getUserInfoByAccessToken(Request $request)
     {

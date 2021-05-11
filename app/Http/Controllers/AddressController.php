@@ -43,12 +43,23 @@ class AddressController extends Controller
         else{
             $address->user_id = Auth::user()->id;
         }
-        $address->address = $request->address;
+   /*    $address->address = $request->address;
         $address->country = $request->country;
         $address->city = $request->city;
         $address->postal_code = $request->postal_code;
         $address->phone = $request->phone;
+        */
+        $address->address = $request->address;
+        $address->country = $request->country;
+        $address->shipping_cost = $request->shipping_cost;
+        $address->name = $request->name;
+        $address->id_card = $request->id_card;
+        $address->city = $request->city;
+        $address->district = $request->district;
+        $address->postal_code = $request->postal_code;
+        $address->phone = $request->phone;
         $address->save();
+
 
         return back();
     }
@@ -87,9 +98,20 @@ class AddressController extends Controller
     {
         $address = Address::findOrFail($id);
         
-        $address->address = $request->address;
+        // modification des anciens champs
+   /*     $address->address = $request->address;
         $address->country = $request->country;
         $address->city = $request->city;
+        $address->postal_code = $request->postal_code;
+        $address->phone = $request->phone; */
+
+        $address->address = $request->address;
+        $address->country = $request->country;
+        $address->shipping_cost = $request->shipping_cost;
+        $address->name = $request->name;
+        $address->id_card = $request->id_card;
+        $address->city = $request->city;
+        $address->district = $request->district;
         $address->postal_code = $request->postal_code;
         $address->phone = $request->phone;
         $address->save();

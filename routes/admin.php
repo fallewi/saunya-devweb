@@ -209,8 +209,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function(
     Route::get('/attributes/edit/{id}', 'AttributeController@edit')->name('attributes.edit');
     Route::get('/attributes/destroy/{id}', 'AttributeController@destroy')->name('attributes.destroy');
 
-    Route::resource('addons', 'AddonController');
-    Route::post('/addons/activation', 'AddonController@activation')->name('addons.activation');
+
 
     Route::get('/customer-bulk-upload/index', 'CustomerBulkUploadController@index')->name('customer_bulk_upload.index');
     Route::post('/bulk-user-upload', 'CustomerBulkUploadController@user_bulk_upload')->name('bulk_user_upload');

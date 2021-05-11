@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\OTPVerificationController;
 use App\Http\Controllers\ClubPointController;
 use App\Http\Controllers\AffiliateController;
 use App\Order;
@@ -426,7 +425,6 @@ class OrderController extends Controller
             }
 
             $order->save();
-
             $array['view'] = 'emails.invoice';
             $array['subject'] = translate('Your order has been placed').' - '.$order->code;
             $array['from'] = env('MAIL_USERNAME');
@@ -440,16 +438,8 @@ class OrderController extends Controller
                 }
             }
 
-            if (\App\Addon::where('unique_identifier', 'otp_system')->first() != null && \App\Addon::where('unique_identifier', 'otp_system')->first()->activated && \App\OtpConfiguration::where('type', 'otp_for_order')->first()->value){
-                try {
-                    $otpController = new OTPVerificationController;
-                    $otpController->send_order_code($order);
-                } catch (\Exception $e) {
-
-                }
-            }
-
-            //sends email to customer with the invoice pdf attached
+    
+            //envoie un e-mail au client avec le pdf de la facture en pièce jointe
             if(env('MAIL_USERNAME') != null){
                 try {
                     Mail::to($request->session()->get('shipping_info')['email'])->queue(new InvoiceEmailManager($array));
